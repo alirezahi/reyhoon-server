@@ -35,6 +35,7 @@ class  RestaurantSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
     foods = FoodSerializer(many=True)
     comments = CommentSerializer(many=True)
+    average_rate = serializers.ReadOnlyField()
 
     class Meta:
         model = Restaurant

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
 from .serializers import *
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -16,6 +17,23 @@ def restaurants_list(request):
         restaurants = Restaurant.objects.filter(**filters)
         restaurants_list = RestaurantSerializer(restaurants, many=True)
         return JsonResponse(restaurants_list.data,safe=False)
+
+
+def restaurants_get(request, restaurant_id):
+    if request.method == 'GET':
+        restaurant = Restaurant.objects.filter(restaurant_id=restaurant_id)
+        if restaurant.count() <= 0:
+            return JsonResponse({})
+        restaurant = restaurant.last()
+        restaurant_detail = RestaurantSerializer(restaurant)
+        return JsonResponse(restaurant_detail.data,safe=False)
+
+
+def restaurants_comments(request, restaurant_id):
+    if request.method == 'GET':
+        comments = Comment.objects.filter(co_restaurant_list__restaurant_id=restaurant_id).order_by('-created_at')
+        comments_list = CommentSerializer(comments, many=True)
+        return JsonResponse(comments_list.data,safe=False)
 
 
 def area_list(request):

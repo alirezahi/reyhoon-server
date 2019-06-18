@@ -40,9 +40,9 @@ class Restaurant(models.Model):
     opening_time = models.TimeField()
     closing_time = models.TimeField()
     address = models.ForeignKey(Address, verbose_name='restaurant', null=True, blank=True, on_delete=models.CASCADE,)
-    categories = models.ManyToManyField(Category, null=True, blank=True, verbose_name='ca_restaurant_list')
-    foods = models.ManyToManyField(Food, null=True, blank=True, verbose_name='fo_restaurant_list')
-    comments = models.ManyToManyField(Comment, null=True, blank=True, verbose_name='co_restaurant_list')
+    categories = models.ManyToManyField(Category, null=True, blank=True, related_name='ca_restaurant_list')
+    foods = models.ManyToManyField(Food, null=True, blank=True, related_name='fo_restaurant_list')
+    comments = models.ManyToManyField(Comment, null=True, blank=True, related_name='co_restaurant_list')
 
     @property
     def average_rate(self):
