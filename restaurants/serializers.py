@@ -26,6 +26,10 @@ class  CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class  AreaSerializer(serializers.Serializer):
+    area = serializers.CharField(max_length=50)
+
+
 class  RestaurantSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     categories = CategorySerializer(many=True)
