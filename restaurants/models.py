@@ -5,6 +5,7 @@ import datetime
 # Create your models here.
 
 class Food(models.Model):
+    food_id = models.CharField(unique=True, primary_key=True,max_length=50)
     name = models.CharField(max_length=50)
     price = models.FloatField(default=0)
     description = models.TextField()
@@ -12,6 +13,7 @@ class Food(models.Model):
 
 
 class Category(models.Model):
+    category_id = models.CharField(unique=True, primary_key=True,max_length=50)
     name = models.CharField(max_length=50)
 
 
@@ -32,6 +34,7 @@ class Comment(models.Model):
 
 
 class Restaurant(models.Model):
+    restaurant_id = models.CharField(unique=True, primary_key=True,max_length=50)
     name = models.CharField(max_length=50)
     logo = models.ImageField(upload_to='images', null=True, blank=True)
     opening_time = models.TimeField()
