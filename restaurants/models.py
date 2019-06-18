@@ -21,6 +21,7 @@ class Address(models.Model):
     address_line = models.CharField(max_length=100)
 
 
+
 class Comment(models.Model):
     author = models.CharField(max_length=50)
     quality = models.FloatField(default=5,validators=[MaxValueValidator(5), MinValueValidator(0)])
@@ -32,10 +33,18 @@ class Comment(models.Model):
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=50)
-    logo = models.ImageField(upload_to='images')
+    logo = models.ImageField(upload_to='images', null=True, blank=True)
     opening_time = models.TimeField()
     closing_time = models.TimeField()
-    average_rate = models.FloatField()
+    address = models.ForeignKey(Address, verbose_name='restaurant', null=True, blank=True, on_delete=models.CASCADE,)
+    categories = models.ManyToManyField(Category, null=True, blank=True, verbose_name='ca_restaurant_list')
+    foods = models.ManyToManyField(Food, null=True, blank=True, verbose_name='fo_restaurant_list')
+    comments = models.ManyToManyField(Comment, null=True, blank=True, verbose_name='co_restaurant_list')
+
+    @property
+    def average_rate(self):
+        total = self.comments.aggregate(total_quality=models.Sum('quality'),total_packaging=models.Sum('packaging'), total_delivery_time=models.Sum('delivery_time'))
+        return ((total['total_quality'] or 0) + (total['total_packaging'] or 0) + (total['total_delivery_time'] or 0)) / 3
 
 
 
