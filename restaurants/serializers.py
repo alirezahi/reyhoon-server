@@ -107,7 +107,6 @@ class  RestaurantSerializer(serializers.ModelSerializer):
             a = Address.objects.create(**address_data)
             r.address = a
         for food in foods_data:
-            print(food)
             food_serializer = FoodSerializer(data=food)
             if food_serializer.is_valid():
                 f = Food.objects.create(**food)
