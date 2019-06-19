@@ -5,7 +5,7 @@ import datetime
 # Create your models here.
 
 class Food(models.Model):
-    food_id = models.CharField(unique=True, primary_key=True,max_length=50)
+    food_id = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     price = models.FloatField(default=0)
     description = models.TextField()
@@ -13,7 +13,7 @@ class Food(models.Model):
 
 
 class Category(models.Model):
-    category_id = models.CharField(unique=True, primary_key=True,max_length=50)
+    category_id = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
 
