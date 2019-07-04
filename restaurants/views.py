@@ -13,7 +13,7 @@ def restaurants_list(request):
     if request.method == 'GET':
         params = request.GET
         params = [
-            ('area', params.get('area', None)),
+            ('address__area__icontains', params.get('area', None)),
             ('categories__name', params.get('category', None)),
         ]
         filters = dict( (key, value) for (key, value) in params if value != None )
@@ -88,6 +88,9 @@ def area_list(request):
     if request.method == 'GET':
         params = request.GET
         area = params.get('area', '')
-        areas = Address.objects.filter(area__icontains=area).values('area')
+        city = params.get('city', '')
+        print(area)
+        areas = Address.objects.filter(area__icontains=area,city__icontains=city).values('area')
         areas_list = AreaSerializer(areas, many=True)
+        print(areas_list)
         return JsonResponse(areas_list.data,safe=False)

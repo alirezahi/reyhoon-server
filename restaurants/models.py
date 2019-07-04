@@ -47,7 +47,8 @@ class Restaurant(models.Model):
     @property
     def average_rate(self):
         total = self.comments.aggregate(total_quality=models.Sum('quality'),total_packaging=models.Sum('packaging'), total_delivery_time=models.Sum('delivery_time'))
-        return ((total['total_quality'] or 0) + (total['total_packaging'] or 0) + (total['total_delivery_time'] or 0)) / 3
+        comment_count = self.comments.count() if self.comment_count != else 1
+        return ((total['total_quality'] or 0) + (total['total_packaging'] or 0) + (total['total_delivery_time'] or 0)) / (3*self.comments.count())
 
 
 
